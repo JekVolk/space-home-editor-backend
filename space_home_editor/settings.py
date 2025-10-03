@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-rnv*^m_e1k4pnhuj2*c74b&v45ye9s=i+ys7jy2s4rdut4nus5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -57,6 +57,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'space_home_editor.urls'
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES = [
     {
@@ -127,3 +129,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://nasahackathon.gamenmt.online",
+    "http://nasahackathon.gamenmt.online",
+]
