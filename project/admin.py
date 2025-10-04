@@ -33,10 +33,6 @@ class ProjectInline(admin.TabularInline):
     extra=0
 
 
-class MissionInline(admin.TabularInline):
-    model = Mission
-    extra = 0
-
 class ExternalSystemsInline(admin.TabularInline):
     model = ExternalSystems
     extra = 0
@@ -152,7 +148,7 @@ class SettingsSpaceStationAdmin(admin.ModelAdmin):
 class ExternalSystemsAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project")
     list_filter = ("project", "catalog")
-    inlines=[ValueResourceExternalSystem]
+    inlines=[ValueResourceExternalSystemInline]
 
 
 @admin.register(Module)
@@ -167,7 +163,7 @@ class ModuleAdmin(admin.ModelAdmin):
 class CompartmentAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project", "module")
     list_filter = ("project", "catalog", "module")
-    inlines = [ZoneInline, ValueResourceCompartment]
+    inlines = [ZoneInline, ValueResourceCompartmentInline]
 
 
 
@@ -175,7 +171,7 @@ class CompartmentAdmin(admin.ModelAdmin):
 class ZoneAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project", "compartment")
     list_filter = ("project", "catalog", "compartment")
-    inlines = [ComponentInline, ClosetInline, ValueResourceZone]
+    inlines = [ComponentInline, ClosetInline, ValueResourceZoneInline]
 
 
 
@@ -184,21 +180,21 @@ class ZoneAdmin(admin.ModelAdmin):
 class ComponentAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project", "zone")
     list_filter = ("project", "catalog", "zone")
-    inlines=[ValueResourceComponent]
+    inlines=[ValueResourceComponentInline]
 
 
 @admin.register(Closet)
 class ClosetAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project", "zone")
     list_filter = ("project", "catalog", "zone")
-    inlines = [InnerComponentInline, ValueResourceCloset]
+    inlines = [InnerComponentInline, ValueResourceClosetInline]
 
 
 @admin.register(InnerComponent)
 class InnerComponentAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project", "closets")
     list_filter = ("project", "catalog", "closets")
-    inlines = [ValueResourceInnerComponent]
+    inlines = [ValueResourceInnerComponentInline]
 
 
 # =====================
