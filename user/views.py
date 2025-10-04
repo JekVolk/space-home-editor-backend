@@ -17,7 +17,6 @@ from user.serializers import RegisterSerializer, TokenResponseSerializer, Logout
 
 
 # -------------------------- Auth ------------------------------------------
-@path_params()
 class RegisterView(APIView):
     permission_classes = [AllowAny]  # <-- доступ без авторизації
 
