@@ -1,4 +1,3 @@
-from django.db.models import Q
 from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
@@ -13,9 +12,9 @@ from project.serializers import ProjectSerializer, SettingsSerializer, ModuleSer
     ExternalSystemsSerializer, ValueResourceExternalSystemSerializer, CompartmentSerializer, \
     ValueResourceCompartmentSerializer, ZoneSerializer, ValueResourceZoneSerializer, ComponentSerializer, \
     ValueResourceComponentSerializer, ClosetSerializer, ValueResourceClosetSerializer, InnerComponentSerializer, \
-    ValueResourceInnerComponentSerializer, MissionsSerializer, ResourcesSerializer, MaterialsSerializer
+    ValueResourceInnerComponentSerializer, MissionsSerializer
 from space_home_editor.utils import path_params
-from user.models import Catalog, Resource, Material
+
 
 
 # -------------------------- Project ------------------------------------------
