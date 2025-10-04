@@ -1,3 +1,4 @@
+from django.db.models import Q
 from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
@@ -12,8 +13,9 @@ from project.serializers import ProjectSerializer, SettingsSerializer, ModuleSer
     ExternalSystemsSerializer, ValueResourceExternalSystemSerializer, CompartmentSerializer, \
     ValueResourceCompartmentSerializer, ZoneSerializer, ValueResourceZoneSerializer, ComponentSerializer, \
     ValueResourceComponentSerializer, ClosetSerializer, ValueResourceClosetSerializer, InnerComponentSerializer, \
-    ValueResourceInnerComponentSerializer, MissionsSerializer
+    ValueResourceInnerComponentSerializer, MissionsSerializer, ResourcesSerializer
 from space_home_editor.utils import path_params
+from user.models import Catalog, Resource
 
 
 # -------------------------- Project ------------------------------------------
@@ -350,7 +352,7 @@ class ValueResourceInnerComponentViewSet(viewsets.ModelViewSet):
 
 # --------------------------  Missions ------------------------------------------
 
-@path_params()
+@path_params('project_pk')
 class MissionsViewSet(viewsets.ModelViewSet):
     serializer_class = MissionsSerializer
     permission_classes = [IsAuthenticated]
@@ -367,4 +369,16 @@ class MissionsViewSet(viewsets.ModelViewSet):
             raise ValidationError("Project ID is required")
         serializer.save(project_id=project_id)
 
+
+
+@path_params('project_pk')
+class ResourcesViewSet(viewsets.ModelViewSet):
+    serializer_class = ResourcesSerializer
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+           return Resource.objects.filter(
+            Q(user=self.request.user) | Q(user__isnull=True)
+        )
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
