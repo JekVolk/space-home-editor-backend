@@ -24,7 +24,7 @@ class Catalog(models.Model):
 
 class Teg(models.Model):
     name = models.CharField(max_length=50)
-    user = models.ForeignKey(User, related_name="tegs", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="tegs", on_delete=models.CASCADE, blank=True, null=True)
 
 
 class Material(models.Model):
