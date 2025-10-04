@@ -1,12 +1,12 @@
 from rest_framework_nested import routers
 
-from user.views import CatalogViewSet
+
 from .views import *
 
 # 0 рівень (projects)
 router = routers.SimpleRouter()
 router.register(r'projects', ProjectViewSet, basename="projects")
-router.register(r'catalogs', CatalogViewSet, basename='catalogs')
+
 
 # 1 рівень (project → modules, external_systems, missions)
 projects_router = routers.NestedSimpleRouter(router, r'projects', lookup='project')

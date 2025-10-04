@@ -13,9 +13,9 @@ from project.serializers import ProjectSerializer, SettingsSerializer, ModuleSer
     ExternalSystemsSerializer, ValueResourceExternalSystemSerializer, CompartmentSerializer, \
     ValueResourceCompartmentSerializer, ZoneSerializer, ValueResourceZoneSerializer, ComponentSerializer, \
     ValueResourceComponentSerializer, ClosetSerializer, ValueResourceClosetSerializer, InnerComponentSerializer, \
-    ValueResourceInnerComponentSerializer, MissionsSerializer, ResourcesSerializer
+    ValueResourceInnerComponentSerializer, MissionsSerializer, ResourcesSerializer, MaterialsSerializer
 from space_home_editor.utils import path_params
-from user.models import Catalog, Resource
+from user.models import Catalog, Resource, Material
 
 
 # -------------------------- Project ------------------------------------------
@@ -370,15 +370,4 @@ class MissionsViewSet(viewsets.ModelViewSet):
         serializer.save(project_id=project_id)
 
 
-
-@path_params('project_pk')
-class ResourcesViewSet(viewsets.ModelViewSet):
-    serializer_class = ResourcesSerializer
-    permission_classes = [IsAuthenticated]
-    def get_queryset(self):
-           return Resource.objects.filter(
-            Q(user=self.request.user) | Q(user__isnull=True)
-        )
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
 

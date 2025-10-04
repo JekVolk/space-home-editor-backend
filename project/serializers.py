@@ -3,7 +3,7 @@ from rest_framework import serializers
 from project.models import Project, SettingsSpaceStation, Module, ExternalSystems, ValueResourceModule, \
     ValueResourceExternalSystem, Compartment, ValueResourceCompartment, Zone, ValueResourceZone, Component, \
     ValueResourceComponent, Closet, ValueResourceCloset, InnerComponent, ValueResourceInnerComponent, Mission
-from user.models import Resource
+
 
 
 # -------------------------- Project ------------------------------------------
@@ -122,8 +122,3 @@ class MissionsSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class ResourcesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Resource
-        fields = ('name', 'icon', 'measurement', 'limit', 'is_limit_type_big', 'stock', 'is_stock_percentage', 'is_default')
-        read_only_fields = ('id',)
