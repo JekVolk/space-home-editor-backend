@@ -23,7 +23,7 @@ class SettingsSerializer(serializers.ModelSerializer):
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Module
-        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "orient", "material", "catalog")
+        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "orient", "material", "owner", "catalog")
 
 
 class ValueResourceModuleSerializer(serializers.ModelSerializer):
