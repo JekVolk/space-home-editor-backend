@@ -47,6 +47,7 @@ class Cosmonauts(models.Model):
 class Resource(models.Model):
     name = models.CharField(max_length=50)
     icon = models.ImageField(upload_to="res_icons/", blank=True, null=True)
+    measurement = models.CharField(max_length=25)
     limit = models.IntegerField()
     is_limit_type_big = models.BooleanField(default=False)
     stock = models.IntegerField(default=0)
