@@ -1,13 +1,19 @@
 from django.contrib.auth.models import User
+from django.db.models import Q
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.decorators import action
 
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
-from user.serializers import RegisterSerializer, TokenResponseSerializer, LogoutResponseSerializer
+from space_home_editor.utils import path_params
+from user.models import Catalog, DefaultValueCatalog
+from user.serializers import RegisterSerializer, TokenResponseSerializer, LogoutResponseSerializer, CatalogSerializer, \
+    DefaultValueCatalogSerializer
 
 
 # -------------------------- Auth ------------------------------------------
@@ -48,3 +54,39 @@ class LogoutView(APIView):
             return Response({"error": "Ви не авторизовані"}, status=400)
         return Response({"message": "Вихід успішний"}, status=200)
 
+# -------------------------- Catalog ------------------------------------------
+@path_params("id")
+class CatalogViewSet(ModelViewSet):
+    serializer_class = CatalogSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Відбір по юзеру чи ті що без юзера (дефолтні) Андрюха дивись по сетуації якшо user обов'язковий в бд тільки по юзеру фільтрація без Q
+        return Catalog.objects.filter(
+            Q(user=self.request.user) | Q(user__isnull=True)
+        )
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+    @action(detail=True, methods=["get", "put", "patch"], url_path="default-value")
+    def default_value(self, request, pk=None):
+        #Андрюха Тобі не потрібна ця функція
+        catalog = self.get_object()
+        try:
+            default_value = catalog.default_value
+        except DefaultValueCatalog.DoesNotExist:
+            # якщо не існує – створимо за замовчуванням
+            default_value = DefaultValueCatalog.objects.create(catalog=catalog)
+
+        if request.method == "GET":
+            serializer = DefaultValueCatalogSerializer(default_value)
+            return Response(serializer.data)
+
+        if request.method in ["PUT", "PATCH"]:
+            serializer = DefaultValueCatalogSerializer(default_value, data=request.data, partial=(request.method=="PATCH"))
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
