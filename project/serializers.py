@@ -16,7 +16,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 class SettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SettingsSpaceStation
-        fields = ["recursive_water", "max_weight"]
+        fields = ["recursive_water", "max_weight", "max_price"]
 
 # -------------------------- Module ------------------------------------------
 

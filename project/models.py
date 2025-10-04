@@ -27,6 +27,7 @@ class SettingsSpaceStation(models.Model):
     project=models.OneToOneField(Project, on_delete=models.CASCADE, related_name="settings")
     recursive_water=models.PositiveIntegerField(default=95)
     max_weight=models.PositiveIntegerField(blank=True, null=True)
+    max_price=models.PositiveIntegerField(blank=True, null=True)
 
 
 class ExternalSystems(BasePropertyMixin, Size3DMixin, CordMixin, OrientedMixin, models.Model):

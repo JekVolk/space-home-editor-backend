@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from space_home_editor.utils import path_params
-from user.models import Catalog, DefaultValueCatalog, DefaultResourceCatalog
+from user.models import Catalog, DefaultResourceCatalog, DefaultValueCatalog
 from user.serializers import RegisterSerializer, TokenResponseSerializer, LogoutResponseSerializer, CatalogSerializer, \
     DefaultValueCatalogSerializer, DefaultResourceCatalogSerializer
 
@@ -71,8 +71,19 @@ class CatalogViewSet(ModelViewSet):
         serializer.save(user=self.request.user)
 
 
+    @extend_schema(
+        methods=["GET"],
+        responses=DefaultValueCatalogSerializer,
+        description="Отримати занчання за замовченням"
+    )
+    @extend_schema(
+        methods=["PUT", "PATCH"],
+        request=DefaultValueCatalogSerializer,
+        responses=DefaultValueCatalogSerializer,
+        description="Оновити занчання за замовченням"
+    )
     @action(detail=True, methods=["get", "put", "patch"], url_path="default-value")
-    def default_value(self, request, pk=None):
+    def default_value_view(self, request, pk=None):
         #Андрюха Тобі не потрібна ця функція
         catalog = self.get_object()
         try:
