@@ -16,7 +16,7 @@ from .models import (
     Project, Mission,
     ExternalSystems, Module, Compartment, Zone, Component, Closet, InnerComponent,
     ValueResourceCosmonauts, ValueResourceModule, ValueResourceExternalSystem, ValueResourceCompartment,
-    ValueResourceZone, ValueResourceComponent, ValueResourceInnerComponent, SettingsSpaceStation
+    ValueResourceZone, ValueResourceComponent, ValueResourceInnerComponent, SettingsSpaceStation, ValueResourceCloset
 )
 
 
@@ -64,6 +64,40 @@ class ClosetInline(admin.TabularInline):
 class InnerComponentInline(admin.TabularInline):
     model = InnerComponent
     extra = 0
+
+class ValueResourceModuleInline(admin.TabularInline):
+    model = ValueResourceModule
+    extra = 0
+
+
+class  ValueResourceExternalSystemInline(admin.TabularInline):
+    model = ValueResourceExternalSystem
+    extra = 0
+
+class ValueResourceCompartmentInline(admin.TabularInline):
+    model = ValueResourceCompartment
+    extra = 0
+
+class ValueResourceZoneInline(admin.TabularInline):
+    model = ValueResourceZone
+    extra = 0
+
+class ValueResourceClosetInline(admin.TabularInline):
+    model = ValueResourceCloset
+    extra = 0
+
+class ValueResourceComponentInline(admin.TabularInline):
+    model = ValueResourceComponent
+    extra = 0
+
+class ValueResourceInnerComponentInline(admin.TabularInline):
+    model = ValueResourceInnerComponent
+    extra = 0
+
+class ValueResourceCosmonautsInline(admin.TabularInline):
+    model = ValueResourceCosmonauts
+    extra = 0
+
 
 
 # =====================
@@ -118,6 +152,7 @@ class SettingsSpaceStationAdmin(admin.ModelAdmin):
 class ExternalSystemsAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project")
     list_filter = ("project", "catalog")
+    inlines=[ValueResourceExternalSystem]
 
 
 @admin.register(Module)
@@ -125,14 +160,14 @@ class ModuleAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project", "material", "owner")
     list_filter = ("project", "catalog", "material")
     search_fields = ("owner",)
-    inlines = [CompartmentInline]
+    inlines = [CompartmentInline, ValueResourceModuleInline]
 
 
 @admin.register(Compartment)
 class CompartmentAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project", "module")
     list_filter = ("project", "catalog", "module")
-    inlines = [ZoneInline]
+    inlines = [ZoneInline, ValueResourceCompartment]
 
 
 
@@ -140,7 +175,7 @@ class CompartmentAdmin(admin.ModelAdmin):
 class ZoneAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project", "compartment")
     list_filter = ("project", "catalog", "compartment")
-    inlines = [ComponentInline, ClosetInline]
+    inlines = [ComponentInline, ClosetInline, ValueResourceZone]
 
 
 
@@ -149,19 +184,21 @@ class ZoneAdmin(admin.ModelAdmin):
 class ComponentAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project", "zone")
     list_filter = ("project", "catalog", "zone")
+    inlines=[ValueResourceComponent]
 
 
 @admin.register(Closet)
 class ClosetAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project", "zone")
     list_filter = ("project", "catalog", "zone")
-    inlines = [InnerComponentInline]
+    inlines = [InnerComponentInline, ValueResourceCloset]
 
 
 @admin.register(InnerComponent)
 class InnerComponentAdmin(admin.ModelAdmin):
     list_display = ("id", "catalog", "project", "closets")
     list_filter = ("project", "catalog", "closets")
+    inlines = [ValueResourceInnerComponent]
 
 
 # =====================
@@ -209,6 +246,7 @@ class ValueResourceZoneAdmin(admin.ModelAdmin):
     list_filter = ("project", "resource", "zone")
     search_fields = ("project__name", "resource__name", "zone__name")
     ordering = ("project", "resource", "zone")
+
 
 
 @admin.register(ValueResourceComponent)

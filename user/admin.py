@@ -5,7 +5,10 @@ from django.contrib import admin
 from django.contrib import admin
 from django.utils.html import format_html
 
-from project.admin import CatalogInline, ProjectInline
+from project.admin import CatalogInline, ProjectInline, ValueResourceCosmonautsInline, ValueResourceModuleInline, \
+    ValueResourceExternalSystemInline, ValueResourceCompartmentInline, ValueResourceZoneInline, \
+    ValueResourceClosetInline, ValueResourceComponentInline, ValueResourceInnerComponentInline
+from project.models import ValueResourceCosmonauts
 from .models import Catalog, Teg, Material, TegProject, Cosmonauts, Resource, DefaultResourceCosmonauts, \
     DefaultResourceCatalog, DefaultValueCatalog
 
@@ -91,6 +94,9 @@ class ResourceAdmin(admin.ModelAdmin):
     list_filter = ('is_limit_type_big', 'is_stock_percentage', 'user')
     list_editable = ('limit', 'is_limit_type_big', 'stock', 'is_stock_percentage')
     search_fields = ('name',)
+    inlines=[ValueResourceCosmonautsInline, ValueResourceModuleInline, ValueResourceExternalSystemInline,
+             ValueResourceCompartmentInline, ValueResourceCompartmentInline, ValueResourceZoneInline, ValueResourceClosetInline,
+             ValueResourceComponentInline,ValueResourceInnerComponentInline]
 
 
 
