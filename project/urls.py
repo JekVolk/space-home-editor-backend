@@ -5,10 +5,11 @@ from .views import *
 router = routers.SimpleRouter()
 router.register(r'projects', ProjectViewSet, basename="projects")
 
-# 1 рівень (project → modules, external_systems)
+# 1 рівень (project → modules, external_systems, missions)
 projects_router = routers.NestedSimpleRouter(router, r'projects', lookup='project')
 projects_router.register(r'modules', ModuleViewSet, basename='project-modules')
 projects_router.register(r'external-systems', ExternalSystemsViewSet, basename='project-external-systems')
+projects_router.register(r'missions', MissionsViewSet, basename='project-missions')
 
 # 2.1 рівень (module → compartments, value-resource)
 modules_router = routers.NestedSimpleRouter(projects_router, r'modules', lookup='module')
@@ -70,6 +71,11 @@ inner_components.register(
     ValueResourceInnerComponentViewSet,
     basename='inner-components-value-resource'
 )
+
+
+
+
+
 
 urlpatterns = []
 urlpatterns += router.urls
