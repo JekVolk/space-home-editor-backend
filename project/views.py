@@ -16,7 +16,7 @@ from space_home_editor.utils import path_params
 
 
 # -------------------------- Project ------------------------------------------
-@path_params("id")
+@path_params()
 class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated]
@@ -50,7 +50,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 # -------------------------- Module ------------------------------------------
 
-@path_params("project_pk", "id")
+@path_params("project_pk")
 class ModuleViewSet(viewsets.ModelViewSet):
     serializer_class = ModuleSerializer
     permission_classes = [IsAuthenticated]
@@ -67,7 +67,7 @@ class ModuleViewSet(viewsets.ModelViewSet):
             raise ValidationError("Project ID is required")
         serializer.save(project_id=project_id)
 
-@path_params("project_pk", "module_pk", "id")
+@path_params("project_pk", "module_pk")
 class ValueResourceModuleViewSet(viewsets.ModelViewSet):
     serializer_class = ValueResourceModuleSerializer
 
@@ -79,7 +79,7 @@ class ValueResourceModuleViewSet(viewsets.ModelViewSet):
 
 # -------------------------- ExternalSystems ------------------------------------------
 
-@path_params("project_pk", "id")
+@path_params("project_pk")
 class ExternalSystemsViewSet(viewsets.ModelViewSet):
     serializer_class = ExternalSystemsSerializer
     permission_classes = [IsAuthenticated]
@@ -96,7 +96,7 @@ class ExternalSystemsViewSet(viewsets.ModelViewSet):
             raise ValidationError("Project ID is required")
         serializer.save(project_id=project_id)
 
-@path_params("project_pk", "external_system_pk", "id")
+@path_params("project_pk", "external_system_pk")
 class ValueResourceExternalSystemViewSet(viewsets.ModelViewSet):
     serializer_class = ValueResourceExternalSystemSerializer
 
@@ -108,7 +108,7 @@ class ValueResourceExternalSystemViewSet(viewsets.ModelViewSet):
 
 # -------------------------- Compartment ------------------------------------------
 
-@path_params("project_pk", "module_pk", "id")
+@path_params("project_pk", "module_pk")
 class CompartmentViewSet(viewsets.ModelViewSet):
     serializer_class = CompartmentSerializer
     permission_classes = [IsAuthenticated]
@@ -131,7 +131,7 @@ class CompartmentViewSet(viewsets.ModelViewSet):
             raise ValidationError("Module ID is required")
         serializer.save(project_id=project_id, module_id=module_id)
 
-@path_params("project_pk", "module_pk", "compartment_pk", "id")
+@path_params("project_pk", "module_pk", "compartment_pk")
 class ValueResourceCompartmentViewSet(viewsets.ModelViewSet):
     serializer_class = ValueResourceCompartmentSerializer
 
@@ -143,7 +143,7 @@ class ValueResourceCompartmentViewSet(viewsets.ModelViewSet):
 
 # -------------------------- Zone ------------------------------------------
 
-@path_params("project_pk", "module_pk", "compartment_pk", "id")
+@path_params("project_pk", "module_pk", "compartment_pk")
 class ZoneViewSet(viewsets.ModelViewSet):
     serializer_class = ZoneSerializer
     permission_classes = [IsAuthenticated]
@@ -172,7 +172,7 @@ class ZoneViewSet(viewsets.ModelViewSet):
             raise ValidationError("Compartment ID is required")
         serializer.save(project_id=project_id, compartment_id=compartment_id)
 
-@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "id")
+@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk")
 class ValueResourceZoneViewSet(viewsets.ModelViewSet):
     serializer_class = ValueResourceZoneSerializer
 
@@ -184,7 +184,7 @@ class ValueResourceZoneViewSet(viewsets.ModelViewSet):
 
 # -------------------------- Component ------------------------------------------
 
-@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "id")
+@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk")
 class ComponentViewSet(viewsets.ModelViewSet):
     serializer_class = ComponentSerializer
     permission_classes = [IsAuthenticated]
@@ -219,7 +219,7 @@ class ComponentViewSet(viewsets.ModelViewSet):
             raise ValidationError("Zone ID is required")
         serializer.save(project_id=project_id, zone_id=zone_id)
 
-@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "components_pk", "id")
+@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "components_pk")
 class ValueResourceComponentViewSet(viewsets.ModelViewSet):
     serializer_class = ValueResourceComponentSerializer
 
@@ -233,7 +233,7 @@ class ValueResourceComponentViewSet(viewsets.ModelViewSet):
 # -------------------------- Closet ------------------------------------------
 
 
-@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "id")
+@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk")
 class ClosetViewSet(viewsets.ModelViewSet):
     serializer_class = ClosetSerializer
     permission_classes = [IsAuthenticated]
@@ -268,7 +268,7 @@ class ClosetViewSet(viewsets.ModelViewSet):
             raise ValidationError("Zone ID is required")
         serializer.save(project_id=project_id, zone_id=zone_id)
 
-@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "closet_pk", "id")
+@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "closet_pk")
 class ValueResourceClosetViewSet(viewsets.ModelViewSet):
     serializer_class = ValueResourceClosetSerializer
 
@@ -281,7 +281,7 @@ class ValueResourceClosetViewSet(viewsets.ModelViewSet):
 # -------------------------- InnerComponent ------------------------------------------
 
 
-@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "closet_pk", "id")
+@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "closet_pk")
 class InnerComponentViewSet(viewsets.ModelViewSet):
     serializer_class = InnerComponentSerializer
     permission_classes = [IsAuthenticated]
@@ -323,7 +323,7 @@ class InnerComponentViewSet(viewsets.ModelViewSet):
         serializer.save(project_id=project_id, closet_id=closet_id)
 
 
-@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "closet_pk", "inner_components_pk", "id")
+@path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "closet_pk", "inner_components_pk")
 class ValueResourceInnerComponentViewSet(viewsets.ModelViewSet):
     serializer_class = ValueResourceInnerComponentSerializer
 

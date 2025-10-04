@@ -17,6 +17,7 @@ from user.serializers import RegisterSerializer, TokenResponseSerializer, Logout
 
 
 # -------------------------- Auth ------------------------------------------
+@path_params()
 class RegisterView(APIView):
     permission_classes = [AllowAny]  # <-- доступ без авторизації
 
@@ -55,7 +56,7 @@ class LogoutView(APIView):
         return Response({"message": "Вихід успішний"}, status=200)
 
 # -------------------------- Catalog ------------------------------------------
-@path_params("id")
+@path_params()
 class CatalogViewSet(ModelViewSet):
     serializer_class = CatalogSerializer
     permission_classes = [IsAuthenticated]
@@ -91,7 +92,7 @@ class CatalogViewSet(ModelViewSet):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@path_params("catalog_pk")
 class DefaultResourceCatalogViewSet(ModelViewSet):
     serializer_class = DefaultResourceCatalogSerializer
     permission_classes = [IsAuthenticated]  # або інші права
