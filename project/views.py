@@ -29,7 +29,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 
     @action(detail=True, methods=["get", "put", "patch"], url_path="settings")
-    def settings(self, request, pk=None):
+    def settings_view(self, request, pk=None):
         project = self.get_object()
         try:
             settings = project.settings
