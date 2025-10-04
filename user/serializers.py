@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from user.models import Catalog, DefaultValueCatalog, DefaultResourceCatalog
+from user.models import Catalog, DefaultValueCatalog, DefaultResourceCatalog, Resource, Material
 
 
 # -------------------------- Auth ------------------------------------------
@@ -40,3 +40,22 @@ class DefaultResourceCatalogSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 # -------------------------- Cosmonauts ------------------------------------------
+
+
+
+class ResourcesSerializer(serializers.ModelSerializer):
+    is_default = serializers.SerializerMethodField()
+    class Meta:
+        model = Resource
+        fields = ('id', 'name', 'icon', 'measurement', 'limit', 'is_limit_type_big', 'stock', 'is_stock_percentage', 'is_default')
+        read_only_fields = ('id',)
+
+    def get_is_default(self, obj)->bool:
+        return obj.user is None
+
+
+class MaterialsSerializer(serializers.ModelSerializer):
+     class Meta:
+        model = Material
+        fields = ('id','name', 'photo')
+        read_only_fields = ('id',)

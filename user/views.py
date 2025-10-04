@@ -11,9 +11,9 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from space_home_editor.utils import path_params
-from user.models import Catalog, DefaultResourceCatalog, DefaultValueCatalog
+from user.models import Catalog, DefaultResourceCatalog, DefaultValueCatalog, Resource, Material
 from user.serializers import RegisterSerializer, TokenResponseSerializer, LogoutResponseSerializer, CatalogSerializer, \
-    DefaultValueCatalogSerializer, DefaultResourceCatalogSerializer
+    DefaultValueCatalogSerializer, DefaultResourceCatalogSerializer, ResourcesSerializer, MaterialsSerializer
 
 
 # -------------------------- Auth ------------------------------------------
@@ -114,3 +114,28 @@ class DefaultResourceCatalogViewSet(ModelViewSet):
     def perform_create(self, serializer):
         catalog_id = self.kwargs.get('catalog_pk')
         serializer.save(catalog_id=catalog_id)
+
+
+@path_params()
+class ResourcesViewSet(ModelViewSet):
+    serializer_class = ResourcesSerializer
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+           return Resource.objects.filter(
+            Q(user=self.request.user) | Q(user__isnull=True)
+        )
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+
+@path_params()
+class MaterialsViewSet(ModelViewSet):
+    serializer_class = MaterialsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Material.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

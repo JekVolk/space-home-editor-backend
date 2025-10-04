@@ -16,6 +16,7 @@ from project.serializers import ProjectSerializer, SettingsSerializer, ModuleSer
 from space_home_editor.utils import path_params
 
 
+
 # -------------------------- Project ------------------------------------------
 @path_params()
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -350,7 +351,7 @@ class ValueResourceInnerComponentViewSet(viewsets.ModelViewSet):
 
 # --------------------------  Missions ------------------------------------------
 
-@path_params()
+@path_params('project_pk')
 class MissionsViewSet(viewsets.ModelViewSet):
     serializer_class = MissionsSerializer
     permission_classes = [IsAuthenticated]
@@ -366,5 +367,6 @@ class MissionsViewSet(viewsets.ModelViewSet):
         if not project_id:
             raise ValidationError("Project ID is required")
         serializer.save(project_id=project_id)
+
 
 
