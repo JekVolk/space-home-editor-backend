@@ -11,9 +11,9 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from space_home_editor.utils import path_params
-from user.models import Catalog, DefaultValueCatalog
+from user.models import Catalog, DefaultValueCatalog, DefaultResourceCatalog
 from user.serializers import RegisterSerializer, TokenResponseSerializer, LogoutResponseSerializer, CatalogSerializer, \
-    DefaultValueCatalogSerializer
+    DefaultValueCatalogSerializer, DefaultResourceCatalogSerializer
 
 
 # -------------------------- Auth ------------------------------------------
@@ -90,3 +90,16 @@ class CatalogViewSet(ModelViewSet):
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DefaultResourceCatalogViewSet(ModelViewSet):
+    serializer_class = DefaultResourceCatalogSerializer
+    permission_classes = [IsAuthenticated]  # або інші права
+
+    def get_queryset(self):
+        catalog_id = self.kwargs.get('catalog_pk')
+        return DefaultResourceCatalog.objects.filter(catalog_id=catalog_id)
+
+    def perform_create(self, serializer):
+        catalog_id = self.kwargs.get('catalog_pk')
+        serializer.save(catalog_id=catalog_id)

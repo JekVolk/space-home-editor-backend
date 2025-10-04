@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from user.models import Catalog
+from user.models import Catalog, DefaultValueCatalog, DefaultResourceCatalog
+
 
 # -------------------------- Auth ------------------------------------------
 
@@ -31,5 +32,11 @@ class DefaultValueCatalogSerializer(serializers.ModelSerializer):
     class Meta:
         model = DefaultValueCatalog
         fields = ["comment", "weight", "price", "d", "h", "w"]
+
+class DefaultResourceCatalogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DefaultResourceCatalog
+        fields = ('id', 'resource', 'value', 'is_disposable')
+        read_only_fields = ('id',)
 
 # -------------------------- Cosmonauts ------------------------------------------
