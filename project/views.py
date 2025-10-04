@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
@@ -28,6 +29,17 @@ class ProjectViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
+    @extend_schema(
+        methods=["GET"],
+        responses=SettingsSerializer,
+        description="Отримати налаштування станції"
+    )
+    @extend_schema(
+        methods=["PUT", "PATCH"],
+        request=SettingsSerializer,
+        responses=SettingsSerializer,
+        description="Оновити налаштування станції"
+    )
     @action(detail=True, methods=["get", "put", "patch"], url_path="settings")
     def settings_view(self, request, pk=None):
         project = self.get_object()
