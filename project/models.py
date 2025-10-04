@@ -8,7 +8,7 @@ from user.models import TegProject, Cosmonauts, Catalog, Resource, Material
 
 class Project(TimestampMixin, models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE, related_name="projects")
-    teg=models.ForeignKey(TegProject, on_delete=models.CASCADE)
+    teg=models.ForeignKey(TegProject, on_delete=models.CASCADE, blank=True, null=True)
     name=models.CharField(max_length=100)
     description=models.TextField(blank=True, null=True)
     preview= models.ImageField(upload_to="project_preview/")
