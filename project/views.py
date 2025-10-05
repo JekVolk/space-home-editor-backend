@@ -333,7 +333,7 @@ class InnerComponentViewSet(viewsets.ModelViewSet):
             raise ValidationError("Zone ID is required")
         if not closet_id:
             raise ValidationError("Closet ID is required")
-        serializer.save(project_id=project_id, closet_id=closet_id)
+        serializer.save(project_id=project_id, closets_id=closet_id)
 
 
 @path_params("project_pk", "module_pk", "compartment_pk", "zone_pk", "closet_pk", "inner_components_pk")
