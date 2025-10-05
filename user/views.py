@@ -11,9 +11,10 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from space_home_editor.utils import path_params
-from user.models import Catalog, DefaultResourceCatalog, DefaultValueCatalog, Resource, Material
+from user.models import Catalog, DefaultResourceCatalog, DefaultValueCatalog, Resource, Material, Teg, TegProject
 from user.serializers import RegisterSerializer, TokenResponseSerializer, LogoutResponseSerializer, CatalogSerializer, \
-    DefaultValueCatalogSerializer, DefaultResourceCatalogSerializer, ResourcesSerializer, MaterialsSerializer
+    DefaultValueCatalogSerializer, DefaultResourceCatalogSerializer, ResourcesSerializer, MaterialsSerializer, \
+    TegsSerializer, TegProjectsSerializer
 
 
 # -------------------------- Auth ------------------------------------------
@@ -136,6 +137,32 @@ class MaterialsViewSet(ModelViewSet):
 
     def get_queryset(self):
         return Material.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+
+@path_params()
+class TegsViewSet(ModelViewSet):
+    serializer_class = TegsSerializer
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        return Teg.objects.filter(
+         Q(user=self.request.user) | Q(user__isnull=True)
+        )
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+@path_params()
+class TegProjectsViewSet(ModelViewSet):
+    serializer_class = TegProjectsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return TegProject.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

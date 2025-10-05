@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from user.models import Catalog, DefaultValueCatalog, DefaultResourceCatalog, Resource, Material
+from user.models import Catalog, DefaultValueCatalog, DefaultResourceCatalog, Resource, Material, Teg, TegProject
 
 
 # -------------------------- Auth ------------------------------------------
@@ -58,4 +58,20 @@ class MaterialsSerializer(serializers.ModelSerializer):
      class Meta:
         model = Material
         fields = ('id','name', 'photo')
+        read_only_fields = ('id',)
+
+
+
+
+class TegsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Teg
+        fields = ('id', 'name')
+        read_only_fields = ('id',)
+
+
+class TegProjectsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TegProject
+        fields = ('id', 'name')
         read_only_fields = ('id',)
