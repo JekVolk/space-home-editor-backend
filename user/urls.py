@@ -15,6 +15,7 @@ router.register(r'materials', MaterialsViewSet, basename="material")
 router.register(r'tegs', TegsViewSet, basename="teg")
 router.register(r'teg-projects', TegProjectsViewSet, basename="teg-project")
 
+
 # 1 рівень (catalogs → modules, default-resources)
 default_resources_router = routers.NestedSimpleRouter(router, r'catalogs', lookup='catalog')
 default_resources_router.register(r'default-resources', DefaultResourceCatalogViewSet, basename='catalog-default-resources')
