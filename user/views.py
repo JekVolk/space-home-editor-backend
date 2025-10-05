@@ -12,10 +12,10 @@ from rest_framework.viewsets import ModelViewSet
 
 from space_home_editor.utils import path_params
 from user.models import Catalog, DefaultResourceCatalog, DefaultValueCatalog, Resource, Material, Teg, TegProject, \
-    Cosmonauts
+    Cosmonauts, DefaultResourceCosmonauts
 from user.serializers import RegisterSerializer, TokenResponseSerializer, LogoutResponseSerializer, CatalogSerializer, \
     DefaultValueCatalogSerializer, DefaultResourceCatalogSerializer, ResourcesSerializer, MaterialsSerializer, \
-    TegsSerializer, TegProjectsSerializer, CosmonautsSerializer
+    TegsSerializer, TegProjectsSerializer, CosmonautsSerializer, DefaultResourceCosmonautsSerializer
 
 
 # -------------------------- Auth ------------------------------------------
@@ -180,3 +180,16 @@ class CosmonautsViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+@path_params("cosmonauts_pk")
+class DefaultResourceCosmonautsViewSet(ModelViewSet):
+    serializer_class = DefaultResourceCosmonautsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        cosmonaut_id = self.kwargs.get('cosmonauts_pk')
+        return DefaultResourceCosmonauts.objects.filter(cosmonaut_id=cosmonaut_id)
+
+    def perform_create(self, serializer):
+        cosmonaut_id = self.kwargs.get('cosmonauts_pk')
+        serializer.save(cosmonaut_id=cosmonaut_id)
