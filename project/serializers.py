@@ -39,7 +39,7 @@ class ExternalSystemsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExternalSystems
         fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d", "orient", "catalog")
-        read_only_fields = ('id')
+        read_only_fields = ('id',)
 
 class ValueResourceExternalSystemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -53,7 +53,7 @@ class CompartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Compartment
         fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d", "catalog")
-        read_only_fields = ('id')
+        read_only_fields = ('id',)
 
 class ValueResourceCompartmentSerializer(serializers.ModelSerializer):
     class Meta:
