@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from user.models import Catalog, DefaultValueCatalog, DefaultResourceCatalog, Resource, Material, Teg, TegProject
+from user.models import Catalog, DefaultValueCatalog, DefaultResourceCatalog, Resource, Material, Teg, TegProject, \
+    Cosmonauts, DefaultResourceCosmonauts
 
 
 # -------------------------- Auth ------------------------------------------
@@ -75,3 +76,17 @@ class TegProjectsSerializer(serializers.ModelSerializer):
         model = TegProject
         fields = ('id', 'name')
         read_only_fields = ('id',)
+
+class CosmonautsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cosmonauts
+        fields = ('id', 'name', 'photo')
+        read_only_fields = ('id',)
+
+class DefaultResourceCosmonautsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DefaultResourceCosmonauts
+        fields = ('id', 'resource', 'value', 'is_disposable')
+        read_only_fields = ('id',)
+
+

@@ -6,7 +6,7 @@ from rest_framework_nested import routers
 
 
 from .views import RegisterView, LogoutView, CatalogViewSet, DefaultResourceCatalogViewSet, ResourcesViewSet, \
-    MaterialsViewSet, TegsViewSet, TegProjectsViewSet
+    MaterialsViewSet, TegsViewSet, TegProjectsViewSet, CosmonautsViewSet, DefaultResourceCosmonautsViewSet
 
 router = DefaultRouter()
 router.register(r'catalogs', CatalogViewSet, basename="catalog")
@@ -14,11 +14,16 @@ router.register(r'resources', ResourcesViewSet, basename="resource")
 router.register(r'materials', MaterialsViewSet, basename="material")
 router.register(r'tegs', TegsViewSet, basename="teg")
 router.register(r'teg-projects', TegProjectsViewSet, basename="teg-project")
+router.register(r'cosmonauts', CosmonautsViewSet, basename="cosmonauts")
 
 
 # 1 рівень (catalogs → modules, default-resources)
 default_resources_router = routers.NestedSimpleRouter(router, r'catalogs', lookup='catalog')
 default_resources_router.register(r'default-resources', DefaultResourceCatalogViewSet, basename='catalog-default-resources')
+
+default_resources_cosmonauts = routers.NestedSimpleRouter(router, r'cosmonauts', lookup='cosmonauts')
+default_resources_cosmonauts.register(r'default-resources', DefaultResourceCosmonautsViewSet, basename='cosmonauts-default-resources')
+
 
 urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
@@ -27,3 +32,4 @@ urlpatterns = [
 ]
 urlpatterns += router.urls
 urlpatterns += default_resources_router.urls
+urlpatterns += default_resources_cosmonauts.urls
