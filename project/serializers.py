@@ -25,7 +25,7 @@ class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Module
         fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "orient", "material", "owner", "catalog")
-
+        read_only_fields = ('id')
 
 class ValueResourceModuleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,7 +38,8 @@ class ValueResourceModuleSerializer(serializers.ModelSerializer):
 class ExternalSystemsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExternalSystems
-        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d", "orient")
+        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d", "orient", "catalog")
+        read_only_fields = ('id')
 
 class ValueResourceExternalSystemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -51,7 +52,8 @@ class ValueResourceExternalSystemSerializer(serializers.ModelSerializer):
 class CompartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Compartment
-        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d",)
+        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d", "catalog")
+        read_only_fields = ('id')
 
 class ValueResourceCompartmentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -64,7 +66,7 @@ class ValueResourceCompartmentSerializer(serializers.ModelSerializer):
 class ZoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Zone
-        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d")
+        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d", "catalog")
 
 class ValueResourceZoneSerializer(serializers.ModelSerializer):
     class Meta:
@@ -77,7 +79,7 @@ class ValueResourceZoneSerializer(serializers.ModelSerializer):
 class ComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Component
-        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d", "orient")
+        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d", "orient", "catalog")
 
 class ValueResourceComponentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -90,7 +92,7 @@ class ValueResourceComponentSerializer(serializers.ModelSerializer):
 class ClosetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Closet
-        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d")
+        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d", "catalog")
 
 class ValueResourceClosetSerializer(serializers.ModelSerializer):
     class Meta:
@@ -103,7 +105,7 @@ class ValueResourceClosetSerializer(serializers.ModelSerializer):
 class InnerComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = InnerComponent
-        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d", "orient")
+        fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "d", "orient", "catalog")
 
 class ValueResourceInnerComponentSerializer(serializers.ModelSerializer):
     class Meta:
