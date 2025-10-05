@@ -25,7 +25,7 @@ class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Module
         fields = ("id", "name", "comment", "weight", "price", "x", "y", "z", "w", "h", "orient", "material", "owner", "catalog")
-        read_only_fields = ('id')
+        read_only_fields = ('id',)
 
 class ValueResourceModuleSerializer(serializers.ModelSerializer):
     class Meta:
