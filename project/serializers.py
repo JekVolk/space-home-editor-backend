@@ -2,7 +2,8 @@ from rest_framework import serializers
 
 from project.models import Project, SettingsSpaceStation, Module, ExternalSystems, ValueResourceModule, \
     ValueResourceExternalSystem, Compartment, ValueResourceCompartment, Zone, ValueResourceZone, Component, \
-    ValueResourceComponent, Closet, ValueResourceCloset, InnerComponent, ValueResourceInnerComponent
+    ValueResourceComponent, Closet, ValueResourceCloset, InnerComponent, ValueResourceInnerComponent, Mission
+
 
 
 # -------------------------- Project ------------------------------------------
@@ -109,3 +110,15 @@ class ValueResourceInnerComponentSerializer(serializers.ModelSerializer):
         model = ValueResourceInnerComponent
         fields = ("id", "value", "is_disposable", "resource")
         read_only_fields = ('id',)
+
+
+
+# -------------------------- Mission ------------------------------------------
+
+class MissionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Mission
+        fields = ("name", "days", "description", "crew_number")
+        read_only_fields = ('id',)
+
+

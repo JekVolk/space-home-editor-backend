@@ -39,7 +39,7 @@ class TegProject(models.Model):
 
 
 class Cosmonauts(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=200)
     photo = models.ImageField(upload_to="cosmonauts_avatar/")
     user = models.ForeignKey(User, related_name="cosmonauts", on_delete=models.CASCADE)
 

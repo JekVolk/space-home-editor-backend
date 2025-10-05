@@ -7,13 +7,14 @@ from rest_framework.response import Response
 
 from project.models import Project, SettingsSpaceStation, Module, ValueResourceModule, ExternalSystems, \
     ValueResourceExternalSystem, Compartment, ValueResourceCompartment, Zone, ValueResourceZone, Component, \
-    ValueResourceComponent, Closet, ValueResourceCloset, InnerComponent, ValueResourceInnerComponent
+    ValueResourceComponent, Closet, ValueResourceCloset, InnerComponent, ValueResourceInnerComponent, Mission
 from project.serializers import ProjectSerializer, SettingsSerializer, ModuleSerializer, ValueResourceModuleSerializer, \
     ExternalSystemsSerializer, ValueResourceExternalSystemSerializer, CompartmentSerializer, \
     ValueResourceCompartmentSerializer, ZoneSerializer, ValueResourceZoneSerializer, ComponentSerializer, \
     ValueResourceComponentSerializer, ClosetSerializer, ValueResourceClosetSerializer, InnerComponentSerializer, \
-    ValueResourceInnerComponentSerializer
+    ValueResourceInnerComponentSerializer, MissionsSerializer
 from space_home_editor.utils import path_params
+
 
 
 # -------------------------- Project ------------------------------------------
@@ -344,3 +345,28 @@ class ValueResourceInnerComponentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(inner_component_id=self.kwargs["inner_component_pk"])
+
+
+
+
+# --------------------------  Missions ------------------------------------------
+
+@path_params('project_pk')
+class MissionsViewSet(viewsets.ModelViewSet):
+    serializer_class = MissionsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        project_id = self.kwargs.get('project_pk')
+        if not project_id:
+            raise ValidationError("Project ID is required")
+        return Mission.objects.filter(project_id=project_id)
+
+    def perform_create(self, serializer):
+        project_id = self.kwargs.get('project_pk')
+        if not project_id:
+            raise ValidationError("Project ID is required")
+        serializer.save(project_id=project_id)
+
+
+
