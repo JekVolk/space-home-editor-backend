@@ -304,7 +304,7 @@ class InnerComponentViewSet(viewsets.ModelViewSet):
         module_id = self.kwargs.get('module_pk')
         compartment_id = self.kwargs.get('compartment_pk')
         zone_id = self.kwargs.get('zone_pk')
-        closet_id = self.kwargs.get('closet_pk')
+        closets_id = self.kwargs.get('closet_pk')
         if not project_id:
             raise ValidationError("Project ID is required")
         if not module_id:
@@ -313,9 +313,9 @@ class InnerComponentViewSet(viewsets.ModelViewSet):
             raise ValidationError("Compartment ID is required")
         if not zone_id:
             raise ValidationError("Zone ID is required")
-        if not closet_id:
+        if not closets_id:
             raise ValidationError("Closet ID is required")
-        return InnerComponent.objects.filter(project_id=project_id, closet_id=closet_id)
+        return InnerComponent.objects.filter(project_id=project_id, closets_id=closets_id)
 
     def perform_create(self, serializer):
         project_id = self.kwargs.get('project_pk')
