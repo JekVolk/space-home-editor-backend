@@ -13,6 +13,9 @@ class Project(TimestampMixin, models.Model):
     description=models.TextField(blank=True, null=True)
     preview= models.ImageField(upload_to="project_preview/")
 
+    def __str__(self):
+        return self.name
+
 
 class Mission(models.Model):
     project=models.ForeignKey(Project, on_delete=models.CASCADE,blank=True, null=True, related_name="missions")
@@ -21,6 +24,9 @@ class Mission(models.Model):
     crew_number=models.PositiveIntegerField()
     description=models.TextField(blank=True, null=True)
     cosmonauts = models.ManyToManyField(Cosmonauts, related_name="missions")
+
+    def __str__(self):
+        return self.name
 
 
 class SettingsSpaceStation(models.Model):
@@ -34,6 +40,8 @@ class ExternalSystems(BasePropertyMixin, Size3DMixin, CordMixin, OrientedMixin, 
     catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, related_name="external_systems")
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="external_systems")
 
+    def __str__(self):
+        return self.name
 
 class Module(BasePropertyMixin, Size2DMixin, CordMixin, OrientedMixin, models.Model):
     catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, related_name="modules")
@@ -41,20 +49,32 @@ class Module(BasePropertyMixin, Size2DMixin, CordMixin, OrientedMixin, models.Mo
     material = models.ForeignKey(Material, on_delete=models.SET_NULL, blank=True, null=True, related_name="modules")
     owner = models.CharField(max_length=100,blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
 class Compartment(BasePropertyMixin, Size3DMixin, CordMixin, models.Model):
     catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, related_name="compartments")
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="compartments" )
     module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name="compartments" )
+
+    def __str__(self):
+        return self.name
 
 class Zone(BasePropertyMixin, Size3DMixin, CordMixin, models.Model):
     catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, related_name="zones")
     project = models.ForeignKey(Project, on_delete=models.CASCADE,related_name="zones")
     compartment = models.ForeignKey(Compartment, on_delete=models.CASCADE,related_name="zones")
 
+    def __str__(self):
+        return self.name
+
 class Component(BasePropertyMixin, Size3DMixin, CordMixin, OrientedMixin, models.Model):
     catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, related_name="components")
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="components")
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE, related_name="components")
+
+    def __str__(self):
+        return self.name
 
 
 class Closet(BasePropertyMixin, Size3DMixin, CordMixin, models.Model):
@@ -62,20 +82,28 @@ class Closet(BasePropertyMixin, Size3DMixin, CordMixin, models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="closets")
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE, related_name="closets")
 
+    def __str__(self):
+        return self.name
+
 class InnerComponent(BasePropertyMixin, Size3DMixin, CordMixin, OrientedMixin, models.Model):
     catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, related_name="inner_components")
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="inner_components")
     closets=models.ForeignKey(Closet, on_delete=models.CASCADE, related_name="inner_components")
+
+    def __str__(self):
+        return self.name
 
 class ValueResourceCosmonauts(ValueResourceMixin, models.Model):
     project=models.ForeignKey(Project, on_delete=models.CASCADE, related_name="value_resources_cosmonauts")
     resource=models.ForeignKey(Resource, on_delete=models.CASCADE, related_name="values_resources_cosmonauts")
     cosmonaut=models.ForeignKey(Cosmonauts, on_delete=models.CASCADE, related_name="value_resources")
 
+
 class ValueResourceModule(ValueResourceMixin, models.Model):
     project=models.ForeignKey(Project, on_delete=models.CASCADE, related_name="value_resources_modules")
     resource=models.ForeignKey(Resource, on_delete=models.CASCADE, related_name="values_resources_modules")
     module=models.ForeignKey(Module, on_delete=models.CASCADE, related_name="value_resources")
+
 
 class ValueResourceExternalSystem(ValueResourceMixin, models.Model):
     project=models.ForeignKey(Project, on_delete=models.CASCADE, related_name="value_resources_external_systems")

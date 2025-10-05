@@ -21,10 +21,16 @@ class Catalog(models.Model):
     teg = models.ForeignKey('Teg', on_delete=models.SET_NULL, blank=True, null=True)
     user = models.ForeignKey(User, related_name="catalogs", on_delete=models.CASCADE, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Teg(models.Model):
     name = models.CharField(max_length=50)
     user = models.ForeignKey(User, related_name="tegs", on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Material(models.Model):
@@ -32,16 +38,25 @@ class Material(models.Model):
     photo = models.ImageField(upload_to="material_photo/")
     user = models.ForeignKey(User, related_name="materials", on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 
 class TegProject(models.Model):
     name = models.CharField(max_length=50)
     user = models.ForeignKey(User, related_name="teg_projects", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class Cosmonauts(models.Model):
     name = models.CharField(max_length=200)
     photo = models.ImageField(upload_to="cosmonauts_avatar/")
     user = models.ForeignKey(User, related_name="cosmonauts", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class Resource(models.Model):
@@ -53,6 +68,9 @@ class Resource(models.Model):
     stock = models.IntegerField(default=0)
     is_stock_percentage = models.BooleanField(default=False)
     user = models.ForeignKey(User, related_name="resources", on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class DefaultResourceCosmonauts(models.Model):
