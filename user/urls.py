@@ -6,7 +6,7 @@ from rest_framework_nested import routers
 
 
 from .views import RegisterView, LogoutView, CatalogViewSet, DefaultResourceCatalogViewSet, ResourcesViewSet, \
-    MaterialsViewSet, TegsViewSet, TegProjectsViewSet
+    MaterialsViewSet, TegsViewSet, TegProjectsViewSet, CosmonautsViewSet
 
 router = DefaultRouter()
 router.register(r'catalogs', CatalogViewSet, basename="catalog")
@@ -14,6 +14,7 @@ router.register(r'resources', ResourcesViewSet, basename="resource")
 router.register(r'materials', MaterialsViewSet, basename="material")
 router.register(r'tegs', TegsViewSet, basename="teg")
 router.register(r'teg-projects', TegProjectsViewSet, basename="teg-project")
+router.register(r'cosmonauts', CosmonautsViewSet, basename="cosmonauts")
 
 
 # 1 рівень (catalogs → modules, default-resources)

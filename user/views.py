@@ -11,10 +11,11 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from space_home_editor.utils import path_params
-from user.models import Catalog, DefaultResourceCatalog, DefaultValueCatalog, Resource, Material, Teg, TegProject
+from user.models import Catalog, DefaultResourceCatalog, DefaultValueCatalog, Resource, Material, Teg, TegProject, \
+    Cosmonauts
 from user.serializers import RegisterSerializer, TokenResponseSerializer, LogoutResponseSerializer, CatalogSerializer, \
     DefaultValueCatalogSerializer, DefaultResourceCatalogSerializer, ResourcesSerializer, MaterialsSerializer, \
-    TegsSerializer, TegProjectsSerializer
+    TegsSerializer, TegProjectsSerializer, CosmonautsSerializer
 
 
 # -------------------------- Auth ------------------------------------------
@@ -164,6 +165,18 @@ class TegProjectsViewSet(ModelViewSet):
 
     def get_queryset(self):
         return TegProject.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+@path_params()
+class CosmonautsViewSet(ModelViewSet):
+    serializer_class = CosmonautsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Cosmonauts.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
